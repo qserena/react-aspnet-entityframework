@@ -39,6 +39,10 @@ When using "Update" and "Delete" you have to first select the item in the list a
 
 <br/>
 
+## Entity Framework
+
+<br/>
+
 ## Database
 <img src="./database.png" alt="SQL Server database." width="800px"/>
 
