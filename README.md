@@ -6,7 +6,7 @@
 This is a fullstack CRUD (Create, Read, Update, Delete) application with a React client, an ASP.NET Core Web API, Entity Framework and a SQL Server database.
 
 <br/>
-<img src="./Fullstack CRUD with EF.png" alt="Overview design of this app." width="850px"/>
+<img src="./Fullstack CRUD with EF.png" alt="Overview design of this app." width="840px"/>
 
 <br/>
 NOTE! The same project, but WITHOUT Entity Framework is [Axios package](https://axios-http.com/) found [Here](https://github.com/qserena/react-aspnet/)
