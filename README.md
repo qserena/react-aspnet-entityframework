@@ -25,7 +25,7 @@ NOTE! The same project, but WITHOUT Entity Framework is found Here!
 <br/>
 
 ## User Interface / Client
-<kbd><img src="./Form.png" alt="Simple user interface." width="700px"/></kbd>
+<kbd><img src="./form.png" alt="Simple user interface." width="700px"/></kbd>
 
 The form shown above is used to execute the CRUD operations. I included quite a lot of input fields in order to handle many data types. 
 
