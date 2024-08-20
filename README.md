@@ -12,6 +12,8 @@ This is a fullstack CRUD (Create, Read, Update, Delete) application with a React
 NOTE! The same project, but WITHOUT Entity Framework is found Here!
 
 <br/>
+<br/>
+
 
 ## Technologies
 - HTML
