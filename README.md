@@ -6,7 +6,9 @@
 This is a fullstack CRUD (Create, Read, Update, Delete) application with a React client, an ASP.NET Core Web API and a SQL Server database.
 
 <br/>
-<img src="./Fullstack CRUD with EF.png" alt="Overview design of this app." width="600px"/>
+<img src="./Fullstack CRUD with EF.png" alt="Overview design of this app." width="800px"/>
+
+NOTE! The same project, but WITHOUT Entity Framework is found Here!
 
 <br/>
 
@@ -17,6 +19,7 @@ This is a fullstack CRUD (Create, Read, Update, Delete) application with a React
 - React
 - ASP.NET Core Web API
 - C#
+- Entity Framework
 - SQL Server
 
 <br/>
