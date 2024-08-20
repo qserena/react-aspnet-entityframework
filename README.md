@@ -3,7 +3,7 @@
 <br/>
 
 ## Description
-This is a fullstack CRUD (Create, Read, Update, Delete) application with a React client, an ASP.NET Core Web API and a SQL Server database.
+This is a fullstack CRUD (Create, Read, Update, Delete) application with a React client, an ASP.NET Core Web API, Entity Framework and a SQL Server database.
 
 <br/>
 <img src="./Fullstack CRUD with EF.png" alt="Overview design of this app." width="800px"/>
