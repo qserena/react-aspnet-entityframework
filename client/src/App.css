@@ -1,0 +1,108 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.container {
+    width: 900px;
+}
+
+.main {
+    display: flex;
+    justify-content: start;
+    align-items: left;
+}
+
+.form {
+    display: flex;
+    justify-content: left;
+    align-items: start;
+    padding: 1em;
+    background-color: aliceblue;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+}
+
+#form-left,
+#form-right,
+fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+}
+
+#form-right {
+    margin-left: 6em;
+}
+
+.right {
+    margin-left: 6em;
+}
+
+fieldset {
+    padding-top: 1em;
+    border-width: 1px;
+}
+
+input {
+    height: 1.6em;
+}
+
+input,
+textarea {
+    margin-bottom: 1em;
+}
+
+input[type='radio'] {
+    margin-right: 8px;
+}
+
+label input {
+    vertical-align: text-top;
+    padding-top: 4px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 0 1em 0;
+}
+
+.checkbox {
+    margin-right: 8px;
+    margin-bottom: 1px;
+}
+
+select {
+    padding: 5px;
+}
+
+.buttons {
+    margin-top: 3em;
+}
+
+.list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.employee-item {
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #ccc;
+    margin-left: 0;
+}
+
+.employee-item:last-child {
+    border-bottom: none;
+}
+
+.employee-item:hover {
+    cursor: pointer;
+    background-color: #f8f8f8;
+}
+
+.employee-item.selected {
+    background-color: #f1f1f1;
+}
