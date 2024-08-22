@@ -7,7 +7,10 @@ This is a fullstack CRUD (Create, Read, Update, Delete) application with a React
 
 <br/>
 <img src="./Fullstack CRUD with EF.png" alt="Overview design of this app." width="830px"/>
+<i>Overview of the system. The React client calls the .NET API and Entity Framework, which calls the database.</i> 
 
+<br/>
+<br/>
 <br/>
 NOTE! The same project, but WITHOUT Entity Framework is found <a href="https://github.com/qserena/react-aspnet/">Here!</a> 
 <br/>
