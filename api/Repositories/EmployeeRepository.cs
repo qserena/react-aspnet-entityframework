@@ -44,6 +44,7 @@ namespace api.Repositories
         {             
             return _context.Employees.ToList();
         }
+
         public void UpdateEmployee(Employee employee) 
         {
             if (employee == null)
