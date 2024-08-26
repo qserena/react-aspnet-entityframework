@@ -1,8 +1,6 @@
 ﻿using api.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Data.SqlClient;    
+using api.Repositories;
+using Microsoft.AspNetCore.Mvc;  
 
 namespace api.Controllers
 {
@@ -10,157 +8,63 @@ namespace api.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private IConfiguration _config;
-        private const string connectionStringName = "EmployeeDBConnection";
-
-        public EmployeeController(IConfiguration config)
+        private readonly IEmployeeRepository _employeeRepository;
+        public EmployeeController(IEmployeeRepository employeeRepository)
         {
-            _config = config;
+            _employeeRepository = employeeRepository;
         }
-
 
         [HttpGet]
-        [Route("GetEmployees")]
-        public ActionResult<IEnumerable<Employee>> GetEmployees()
+        public IActionResult GetEmployees()
         {
-            var connectionString = _config.GetConnectionString(connectionStringName);
-            if (connectionString == null)
-            {
-                return Problem("Connection string not found");
-            }
-            var table = new DataTable();
-            using (var connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (var command = new SqlCommand("SELECT * FROM dbo.employees", connection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        table.Load(reader);
-                        reader.Close();
-                        connection.Close();
-                        return Ok(ConvertToEmployee(table));
-                    }
-                }
-            }
+            var employees = _employeeRepository.GetAllEmployees();
+            return Ok(employees);
         }
 
-        private List<Employee> ConvertToEmployee(DataTable table)
+        [HttpGet("{id}")]
+        public IActionResult GetEmployeeById(int id)
         {
-            var emp = new List<Employee>();
-
-            emp = (from DataRow row in table.Rows
-
-                   select new Employee
-                   {
-                       Id = Convert.ToInt32(row["id"]),
-                       FirstName = row["first_name"].ToString(),
-                       LastName = row["last_name"].ToString(),
-                       Email = row["email"].ToString(), 
-                       Comments = row["comments"].ToString(),
-                       IsFriendly = Convert.ToBoolean(row["is_friendly"]),
-                       BirthYear = Convert.ToInt32(row["birth_year"]),
-                       Weight = Convert.ToDecimal(row["weight"]),
-                       EmploymentStatus = Convert.ToInt32(row["employment_status"]),
-                       FavoriteColor = Convert.ToInt32(row["favorite_color"])
-
-                   }).ToList();
-
-            return emp;
+            var employee = _employeeRepository.GetEmployeeById(id);
+            return Ok(employee);
         }
 
         [HttpPost]
-        [Route("AddEmployee")]
-        public ActionResult<Employee> AddEmployee(Employee emp)
+        public IActionResult AddEmployee(Employee employee)
         {
-            var connectionString = _config.GetConnectionString(connectionStringName);
-            if (connectionString == null)
+            if (employee == null)
             {
-                return Problem("Connection string not found");
+                return BadRequest();
             }
-            var commandText = "INSERT INTO [dbo].[employees] ([first_name],[last_name],[email],[comments],[is_friendly],[birth_year],[weight],[employment_status],[favorite_color]) " +
-                "VALUES (@first_name,@last_name,@email,@comments,@is_friendly,@birth_year,@weight,@employment_status,@favorite_color)";
-
-            using (var connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
-                {
-                    command.Parameters.AddWithValue("@first_name", emp.FirstName);
-                    command.Parameters.AddWithValue("@last_name", emp.LastName);
-                    command.Parameters.AddWithValue("@email", emp.Email);
-                    command.Parameters.AddWithValue("@comments", emp.Comments);
-                    command.Parameters.AddWithValue("@is_friendly", emp.IsFriendly);
-                    command.Parameters.AddWithValue("@birth_year", emp.BirthYear);
-                    command.Parameters.AddWithValue("@weight", emp.Weight);
-                    command.Parameters.AddWithValue("@employment_status", emp.EmploymentStatus);
-                    command.Parameters.AddWithValue("@favorite_color", emp.FavoriteColor);
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                    return Ok("Added successfully!");
-                }
-            }
+            _employeeRepository.AddEmployee(employee);
+            return CreatedAtAction(nameof(GetEmployeeById), new { id = employee.Id }, employee);
         }
 
-        [HttpPut]
-        [Route("UpdateEmployee")]
-        public ActionResult<Employee> UpdateEmployee(int id, Employee emp)
+        [HttpPut("{id}")]
+        public IActionResult UpdateEmployee(int id, [FromBody] Employee employee)
         {
-            var connectionString = _config.GetConnectionString(connectionStringName);
-            if (connectionString == null)
+            if (employee == null || id != employee.Id)
             {
-                return Problem("Connection string not found");
+                return BadRequest();
             }
-            var commandText = "UPDATE [dbo].[employees] SET [first_name]=@first_name," +
-                "[last_name] = @last_name,[email] = @email,[comments] = @comments,[is_friendly] = @is_friendly," +
-                "[birth_year] = @birth_year,[weight] = @weight,[employment_status] = @employment_status,[favorite_color] = @favorite_color " +
-                "WHERE id = @id";
-
-            using (var connection = new SqlConnection(connectionString))
+            var existingEmployee = _employeeRepository.GetEmployeeById(id);
+            if (existingEmployee == null)
             {
-                connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
-                {
-                    command.Parameters.AddWithValue("@id", id);
-                    command.Parameters.AddWithValue("@first_name", emp.FirstName);
-                    command.Parameters.AddWithValue("@last_name", emp.LastName);
-                    command.Parameters.AddWithValue("@email", emp.Email);
-                    command.Parameters.AddWithValue("@comments", emp.Comments);
-                    command.Parameters.AddWithValue("@is_friendly", emp.IsFriendly);
-                    command.Parameters.AddWithValue("@birth_year", emp.BirthYear);
-                    command.Parameters.AddWithValue("@weight", emp.Weight);
-                    command.Parameters.AddWithValue("@employment_status", emp.EmploymentStatus);
-                    command.Parameters.AddWithValue("@favorite_color", emp.FavoriteColor);
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                    return Ok("Updated successfully!");
-                }
+                return NotFound();
             }
+            _employeeRepository.UpdateEmployee(employee);
+            return NoContent();
         }
 
-        [HttpDelete]
-        [Route("DeleteEmployee")]
-        public ActionResult<Employee> DeleteEmployee(int id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEmployee(int id)
         {
-            var connectionString = _config.GetConnectionString(connectionStringName);
-            if (connectionString == null)
+            var existingEmployee = _employeeRepository.GetEmployeeById(id);
+            if (existingEmployee == null)
             {
-                return Problem("Connection string not found");
+                return NotFound();
             }
-            var commandText = "DELETE FROM [dbo].[employees] WHERE id = @id";
-
-            using (var connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(commandText, connection))
-                {
-                    command.Parameters.AddWithValue("@id", id);
-                    
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                    return Ok("Deleted successfully!");
-                }
-            }
+            _employeeRepository.DeleteEmployee(id);
+            return NoContent();
         }
     }
 }
