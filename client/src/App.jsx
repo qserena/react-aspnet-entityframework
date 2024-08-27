@@ -32,17 +32,8 @@ function App() {
             console.log(res.data)
             setEmployees(
                 res.data.map((elem) => ({
+                    ...elem,
                     key: elem.id,
-                    id: elem.id,
-                    firstName: elem.firstName,
-                    lastName: elem.lastName,
-                    email: elem.email,
-                    comments: elem.comments,
-                    isFriendly: elem.isFriendly,
-                    birthYear: elem.birthYear,
-                    weight: elem.weight,
-                    employmentStatus: elem.employmentStatus,
-                    favoriteColor: elem.favoriteColor,
                 }))
             )
         } catch (error) {
