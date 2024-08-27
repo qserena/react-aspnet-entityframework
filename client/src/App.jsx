@@ -29,7 +29,6 @@ function App() {
     async function getEmployees() {
         try {
             const res = await axios.get(BASE_URL)
-            console.log(res.data)
             setEmployees(
                 res.data.map((elem) => ({
                     ...elem,
@@ -48,20 +47,12 @@ function App() {
         }
 
         const data = {
-            Id: '',
-            FirstName: formData.firstName,
-            LastName: formData.lastName,
-            Email: formData.email,
-            Comments: formData.comments,
-            IsFriendly: formData.isFriendly,
-            BirthYear: formData.birthYear,
-            Weight: formData.weight,
-            EmploymentStatus: formData.employmentStatus,
-            FavoriteColor: formData.favoriteColor,
+            ...formData,
+            id: '',
         }
 
         try {
-            const response = await axios.post(BASE_URL + 'AddEmployee', data)
+            const response = await axios.post(BASE_URL, data)
             setFormData(emptyForm)
         } catch (error) {
             handleAxiosError(error)
@@ -71,23 +62,11 @@ function App() {
 
     async function updateClick() {
         const data = {
-            Id: formData.id,
-            FirstName: formData.firstName,
-            LastName: formData.lastName,
-            Email: formData.email,
-            Comments: formData.comments,
-            IsFriendly: formData.isFriendly,
-            BirthYear: formData.birthYear,
-            Weight: formData.weight,
-            EmploymentStatus: formData.employmentStatus,
-            FavoriteColor: formData.favoriteColor,
+            ...formData,
         }
 
         try {
-            const response = await axios.put(
-                BASE_URL + `UpdateEmployee?id=${data.Id}`,
-                data
-            )
+            const response = await axios.put(BASE_URL + `?id=${data.Id}`, data)
             setFormData(emptyForm)
         } catch (error) {
             handleAxiosError(error)
@@ -97,9 +76,7 @@ function App() {
 
     async function deleteClick() {
         try {
-            const response = await axios.delete(
-                BASE_URL + `DeleteEmployee?id=${formData.id}`
-            )
+            const response = await axios.delete(BASE_URL + `?id=${formData.id}`)
             setFormData(emptyForm)
         } catch (error) {
             handleAxiosError(error)
