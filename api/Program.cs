@@ -21,9 +21,9 @@ builder.Services.AddSwaggerGen();
 //options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 var app = builder.Build();
-// 2) Enable CORS
-app.UseCors(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
+// 2) Enable CORS
+app.UseCors("CORSPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

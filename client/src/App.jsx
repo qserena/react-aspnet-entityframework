@@ -28,21 +28,21 @@ function App() {
 
     async function getEmployees() {
         try {
-            const res = await axios.get(BASE_URL + 'GetEmployees')
-
+            const res = await axios.get(BASE_URL)
+            console.log(res.data)
             setEmployees(
                 res.data.map((elem) => ({
-                    key: elem.Id,
-                    id: elem.Id,
-                    firstName: elem.FirstName,
-                    lastName: elem.LastName,
-                    email: elem.Email,
-                    comments: elem.Comments,
-                    isFriendly: elem.IsFriendly,
-                    birthYear: elem.BirthYear,
-                    weight: elem.Weight,
-                    employmentStatus: elem.EmploymentStatus,
-                    favoriteColor: elem.FavoriteColor,
+                    key: elem.id,
+                    id: elem.id,
+                    firstName: elem.firstName,
+                    lastName: elem.lastName,
+                    email: elem.email,
+                    comments: elem.comments,
+                    isFriendly: elem.isFriendly,
+                    birthYear: elem.birthYear,
+                    weight: elem.weight,
+                    employmentStatus: elem.employmentStatus,
+                    favoriteColor: elem.favoriteColor,
                 }))
             )
         } catch (error) {
