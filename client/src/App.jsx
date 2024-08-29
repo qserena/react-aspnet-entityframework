@@ -48,7 +48,7 @@ function App() {
 
         const data = {
             ...formData,
-            id: '',
+            id: null,
         }
 
         try {

@@ -29,7 +29,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddEmployee(Employee employee)
+        public IActionResult AddEmployee([FromBody] Employee employee)
         {
             if (employee == null)
             {
