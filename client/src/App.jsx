@@ -52,7 +52,7 @@ function App() {
         }
 
         try {
-            const response = await axios.post(BASE_URL, data)
+            await axios.post(BASE_URL, data)
             setFormData(emptyForm)
         } catch (error) {
             handleAxiosError(error)
@@ -66,7 +66,8 @@ function App() {
         }
 
         try {
-            const response = await axios.put(BASE_URL + `?id=${data.Id}`, data)
+            const url = BASE_URL + `${data.id}`
+            await axios.put(url, data)
             setFormData(emptyForm)
         } catch (error) {
             handleAxiosError(error)
@@ -76,7 +77,8 @@ function App() {
 
     async function deleteClick() {
         try {
-            const response = await axios.delete(BASE_URL + `?id=${formData.id}`)
+            const url = BASE_URL + `${formData.id}`
+            await axios.delete(url)
             setFormData(emptyForm)
         } catch (error) {
             handleAxiosError(error)
